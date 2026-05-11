@@ -1,42 +1,78 @@
 :root {
-    --primary-color: #1a237e;
-    --accent-color: #ffd700;
-    --bg-color: #f8f9fa;
+    --primary-color: #2c3e50;
+    --accent-color: #3498db;
+    --bg-color: #f4f7f6;
     --card-bg: #ffffff;
+    --border-color: #e0e0e0;
 }
 
-body { font-family: 'Segoe UI', sans-serif; background: var(--bg-color); margin: 0; }
+body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: var(--bg-color); margin: 0; color: #333; }
 .container { max-width: 1200px; margin: auto; padding: 20px; }
 
-.main-header { 
-    background: linear-gradient(135deg, var(--primary-color), #283593);
-    color: white; text-align: center; padding: 50px 0; 
+/* Header & Clock */
+.main-header { text-align: center; padding: 40px 0; }
+.time-display { font-weight: bold; color: var(--accent-color); }
+
+/* Tabs Tin Tức */
+.news-tabs { display: flex; justify-content: center; gap: 10px; margin-bottom: 25px; }
+.tab-btn { padding: 10px 20px; border: 1px solid var(--accent-color); background: white; color: var(--accent-color); border-radius: 5px; cursor: pointer; transition: 0.3s; }
+.tab-btn.active, .tab-btn:hover { background: var(--accent-color); color: white; }
+
+/* News Grid */
+.news-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 50px; }
+.news-item { background: white; padding: 15px; border-radius: 8px; border: 1px solid var(--border-color); }
+
+/* BỐ CỤC MÁY TÍNH & KẾT QUẢ (GRID) */
+.tools-grid-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* 2 cột bằng nhau */
+    gap: 30px;
+    align-items: start;
 }
 
-.spotlight-card {
-    background: white; border-left: 5px solid var(--accent-color);
-    padding: 20px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    margin: -25px auto 30px; max-width: 800px; animation: slideIn 0.8s ease;
+.tool-card {
+    background: var(--card-bg);
+    padding: 30px;
+    border-radius: 15px;
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
 }
 
-.news-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
-.news-item { 
-    background: white; padding: 20px; border-radius: 12px; 
-    transition: 0.3s; box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+.tool-card input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box; }
+
+.btn-group { display: flex; gap: 10px; margin-top: 15px; }
+.btn-group button, .btn-full { flex: 1; padding: 12px; border: none; border-radius: 5px; background: var(--primary-color); color: white; cursor: pointer; font-weight: bold; }
+.btn-alt { background: #ffd700 !important; color: #333 !important; }
+.btn-full { width: 100%; margin-top: 15px; }
+
+/* ÉP KẾT QUẢ XUỐNG DƯỚI CĂN GIỮA */
+.result-container {
+    grid-column: 1 / span 2; /* Chiếm cả 2 cột */
+    display: flex;
+    justify-content: center; /* Căn giữa nội dung bên trong */
+    margin-top: 20px;
 }
-.news-item:hover { transform: translateY(-8px); box-shadow: 0 12px 25px rgba(0,0,0,0.1); }
 
-.tool-card { 
-    width: 450px; background: white; padding: 25px; 
-    border-radius: 15px; box-shadow: 0 8px 20px rgba(0,0,0,0.08); 
+.result-display {
+    width: 70%; /* Độ rộng ô kết quả */
+    background: #eef7ff;
+    padding: 25px;
+    border: 2px dashed var(--accent-color);
+    border-radius: 10px;
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--primary-color);
 }
 
-input { width: 100%; padding: 12px; margin: 8px 0; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; }
-button { background: var(--primary-color); color: white; border: none; padding: 12px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; }
+.section-title { text-align: center; margin-bottom: 30px; font-size: 1.8rem; }
 
-.ad-placement { margin: 50px auto; text-align: center; }
-.ad-label { font-size: 10px; color: #bbb; margin-bottom: 5px; }
+/* Footer */
+.footer { text-align: center; padding: 50px; border-top: 1px solid var(--border-color); margin-top: 50px; }
 
-.footer { background: #222; color: white; text-align: center; padding: 30px; margin-top: 40px; }
-
-@keyframes slideIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .tools-grid-layout, .news-grid { grid-template-columns: 1fr; }
+    .result-container { grid-column: 1; }
+    .result-display { width: 100%; }
+}
