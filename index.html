@@ -35,7 +35,7 @@
             <div class="spotlight-card">
                 <h3 class="spotlight-title"><i class="fas fa-bolt" style="color: #ffd700;"></i> TIÊU ĐIỂM TÀI CHÍNH</h3>
                 <div id="ai-analysis-content">
-                    <p>Đang cập nhật dữ liệu mới cho Bạn...</p>
+                    <p>Đang kết nối dữ liệu thị trường...</p>
                 </div>
             </div>
         </section>
@@ -48,12 +48,12 @@
         </div>
 
         <section class="news-section">
-            <div id="news-grid" class="news-grid">
-                </div>
+            <div id="news-grid" class="news-grid"></div>
         </section>
 
         <section class="tools-section">
             <h2 class="section-title">CÔNG CỤ TÀI CHÍNH</h2>
+            
             <div class="tools-flex-container">
                 <div class="tool-card hover-lift">
                     <h4><i class="fas fa-piggy-bank"></i> Tiết Kiệm / Lãi Vay</h4>
@@ -66,15 +66,17 @@
                     </div>
                 </div>
 
-                <div id="result-box" class="result-display">
-                    Kết quả của Bạn sẽ hiện ở đây...
-                </div>
-
                 <div class="tool-card hover-lift">
                     <h4><i class="fas fa-calculator"></i> Ước Tính Thuế TNCN</h4>
                     <input type="number" id="salary" placeholder="Tổng thu nhập (VNĐ)">
                     <input type="number" id="dependents" placeholder="Số người phụ thuộc">
                     <button onclick="calcTax()" style="width:100%;">Tính Thuế</button>
+                </div>
+            </div>
+
+            <div class="result-wrapper">
+                <div id="result-box" class="result-display">
+                    Kết quả của Bạn sẽ hiện ở đây...
                 </div>
             </div>
         </section>
