@@ -1,26 +1,94 @@
-:root { --bg: #ffffff; --text: #1a1a1a; --card: #fdfdfd; --accent: #2c3e50; }
-.dark-mode { --bg: #121212; --text: #e0e0e0; --card: #1e1e1e; --accent: #3498db; }
+/* Biến màu sắc */
+:root {
+    --bg-color: #ffffff;
+    --text-color: #333;
+    --card-bg: #fff;
+    --accent-color: #2c3e50;
+    --border-color: #eee;
+}
 
-body { background: var(--bg); color: var(--text); transition: 0.3s; margin: 0; text-align: center; }
+/* Màu cho Dark Mode */
+.dark-theme {
+    --bg-color: #1a1a1a;
+    --text-color: #e0e0e0;
+    --card-bg: #2d2d2d;
+    --accent-color: #3498db;
+    --border-color: #444;
+}
 
-/* Căn giữa đồng hồ */
-.time-display { display: block; margin: 10px auto; color: #666; font-size: 0.9rem; width: 100%; text-align: center; }
+body { 
+    background-color: var(--bg-color); 
+    color: var(--text-color); 
+    transition: all 0.3s ease; 
+    margin: 0; 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+}
 
-.btn-floating { position: fixed; bottom: 20px; right: 20px; z-index: 1000; padding: 10px 20px; border-radius: 25px; border: none; background: var(--accent); color: white; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+/* Nút Dark Mode cố định */
+.dark-mode-btn {
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    z-index: 1000;
+    padding: 10px 15px;
+    background: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
 
-/* Bố cục tin tức 3 cột đối xứng */
-.news-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 20px; text-align: left; }
-.news-item { background: var(--card); border: 1px solid #eee; padding: 15px; border-radius: 8px; transition: 0.3s; }
-.news-item:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-color: var(--accent); }
+.container { max-width: 1200px; margin: auto; padding: 20px; }
+
+/* Tabs tin tức */
+.news-tabs { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+.tab-btn { padding: 8px 16px; border: 1px solid var(--accent-color); background: transparent; color: var(--accent-color); border-radius: 5px; cursor: pointer; transition: 0.3s; }
+.tab-btn.active, .tab-btn:hover { background: var(--accent-color); color: white; }
+
+/* Grid tin tức */
+.news-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; margin-bottom: 40px; }
+
+/* HIỆU ỨNG HOVER CHO NEWS ITEM */
+.news-item { 
+    background: var(--card-bg); 
+    border: 1px solid var(--border-color); 
+    padding: 20px; 
+    border-radius: 8px; 
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+.news-item:hover {
+    transform: translateY(-5px); /* Nổi lên */
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15); /* Đổ bóng */
+    border-color: var(--accent-color); /* Đổi màu viền */
+}
+
+/* HIỆU ỨNG HOVER CHO MÁY TÍNH */
+.tool-card { 
+    width: 450px; 
+    background: var(--card-bg); 
+    border: 1px solid var(--border-color); 
+    padding: 25px; 
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+}
+.tool-card:hover {
+    transform: scale(1.02); /* To lên nhẹ */
+}
+
+/* Kết quả hiển thị */
+.result-display { 
+    margin-top: 30px; 
+    padding: 20px; 
+    background: var(--card-bg); 
+    border: 1px dashed var(--accent-color); 
+    text-align: center; 
+    font-weight: bold; 
+    min-height: 50px;
+}
 
 /* Thu nhỏ quảng cáo */
-.ad-container-small { max-width: 468px; margin: 0 auto; transform: scale(0.9); overflow: hidden; }
-.ad-label { font-size: 10px; color: #bbb; margin-bottom: 5px; }
+.ad-placement { margin: 60px auto; text-align: center; max-width: 300px; }
+.ad-container { transform: scale(0.8); }
 
-/* Máy tính tài chính */
-.tools-flex-container { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
-.tool-card { width: 420px; background: var(--card); border: 1px solid #ddd; padding: 20px; border-radius: 10px; text-align: left; transition: 0.3s; }
-.tool-card:hover { transform: translateY(-3px); border-color: var(--accent); }
-
-.footer { padding: 40px; background: #f8f8f8; margin-top: 50px; border-top: 1px solid #eee; }
-.dark-mode .footer { background: #1a1a1a; border-color: #333; }
+.footer { text-align: center; padding: 40px; border-top: 1px solid var(--border-color); }
