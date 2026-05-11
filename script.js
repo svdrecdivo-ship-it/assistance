@@ -1,54 +1,83 @@
-// Dark Mode Toggle
-const btn = document.getElementById('dark-mode-toggle');
-btn.onclick = () => {
-    document.body.classList.toggle('dark-theme');
-    btn.innerText = document.body.classList.contains('dark-theme') ? "☀️ Chế độ sáng" : "🌓 Chế độ tối";
-};
-
-// Đồng hồ
-setInterval(() => {
-    document.getElementById('clock').innerText = new Date().toLocaleString('vi-VN');
-}, 1000);
-
-// Tính Lãi
-function calcInterest() {
-    const p = parseFloat(document.getElementById('principal').value);
-    const r = (parseFloat(document.getElementById('rate').value) / 100) / 12;
-    const n = parseFloat(document.getElementById('months').value);
-    if (!p || !r || !n) return alert("Vui lòng nhập đầy đủ thông số để tính toán!");
-    
-    const res = Math.round(p * r * n);
-    document.getElementById('result-box').innerHTML = `Số tiền lãi dự kiến: <span style="color:var(--accent)">${res.toLocaleString()} VNĐ</span>`;
+function updateClock() {
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' };
+    document.getElementById('clock').innerText = new Date().toLocaleDateString('vi-VN', options);
 }
 
-// Tính Thuế TNCN
+// Giữ nguyên tinh thần fetch tin tức từ code cũ của Nam
+async function fetchFinanceNews() {
+    const rssUrl = 'https://vnexpress.net/rss/kinh-doanh.rss';
+    const apiProxy = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`;
+    
+    try {
+        const res = await fetch(apiProxy);
+        const data = await res.json();
+        if (data.status === 'ok') {
+            // Cập nhật Tiêu điểm
+            document.getElementById('ai-analysis-content').innerHTML = `<p><strong>Mới nhất:</strong> ${data.items[0].title}</p>`;
+            
+            // Đổ tin vào lưới với hiệu ứng fadeIn
+            const grid = document.getElementById('news-grid');
+            grid.innerHTML = data.items.slice(1, 9).map(item => `
+                <div class="news-item">
+                    <h3 style="font-size:1.1rem; color:#1a237e;">${item.title}</h3>
+                    <p style="font-size:0.9rem; color:#555;">${item.description.replace(/<[^>]*>?/gm, '').substring(0, 120)}...</p>
+                    <a href="${item.link}" target="_blank" style="text-decoration:none; font-weight:bold; color:#d4af37;">Xem thêm →</a>
+                </div>
+            `).join('');
+        }
+    } catch (e) {
+        console.error("Lỗi fetch:", e);
+    }
+}
+
+// Hiệu ứng số nhảy khi tính toán
+function animateResult(val) {
+    const box = document.getElementById('result-box');
+    let start = 0;
+    const duration = 500;
+    const startTime = performance.now();
+
+    function update(currentTime) {
+        const elapsed = currentTime - startTime;
+        const progress = Math.min(elapsed / duration, 1);
+        const currentVal = Math.floor(progress * val);
+        box.innerHTML = `Kết quả: <b style="font-size:1.4rem;">${currentVal.toLocaleString()} VNĐ</b>`;
+        if (progress < 1) requestAnimationFrame(update);
+    }
+    requestAnimationFrame(update);
+}
+
+function calcInterest() {
+    const p = parseFloat(document.getElementById('principal').value);
+    const r = parseFloat(document.getElementById('rate').value) / 100 / 12;
+    const n = parseFloat(document.getElementById('months').value);
+    if (isNaN(p) || isNaN(r) || isNaN(n)) return alert("Nhập đủ số liệu nha Nam!");
+    animateResult(Math.round(p * r * n));
+}
+
+function calcFV() {
+    const p = parseFloat(document.getElementById('principal').value);
+    const r = parseFloat(document.getElementById('rate').value) / 100 / 12;
+    const n = parseFloat(document.getElementById('months').value);
+    if (isNaN(p) || isNaN(r) || isNaN(n)) return alert("Nhập đủ số liệu nha Nam!");
+    animateResult(Math.round(p * Math.pow((1 + r), n)));
+}
+
 function calcTax() {
     const s = parseFloat(document.getElementById('salary').value) || 0;
     const d = parseFloat(document.getElementById('dependents').value) || 0;
-    if (s <= 0) return alert("Vui lòng nhập tổng thu nhập!");
-
     const taxable = s - 11000000 - (d * 4400000);
-    let tax = taxable > 0 ? taxable * 0.1 : 0; // Công thức đơn giản hóa
-    document.getElementById('result-box').innerHTML = `Thuế TNCN tạm tính: <span style="color:#e74c3c">${Math.round(tax).toLocaleString()} VNĐ</span>`;
+    let tax = 0;
+    if (taxable > 0) {
+        if (taxable <= 5000000) tax = taxable * 0.05;
+        else if (taxable <= 10000000) tax = taxable * 0.1 - 250000;
+        else tax = taxable * 0.15 - 750000;
+    }
+    animateResult(Math.round(tax));
 }
 
-// Hàm lấy tin tức VnExpress
-async function changeCategory(cat, btn) {
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    const grid = document.getElementById('news-grid');
-    grid.innerHTML = "Đang tải tin mới...";
-    
-    try {
-        const res = await fetch(`https://api.rss2json.com/v1/api.json?rss_url=https://vnexpress.net/rss/${cat}.rss`);
-        const data = await res.json();
-        grid.innerHTML = data.items.slice(0, 6).map(item => `
-            <div class="news-item" style="background:var(--card); padding:20px; border-radius:10px; box-shadow:var(--shadow)">
-                <h4 style="color:var(--accent)">${item.title}</h4>
-                <a href="${item.link}" target="_blank" style="color:var(--text); font-size:0.8rem">Xem chi tiết</a>
-            </div>
-        `).join('');
-    } catch(e) { grid.innerHTML = "Không thể kết nối dữ liệu tin tức."; }
-}
-
-window.onload = () => changeCategory('kinh-doanh', document.querySelector('.tab-btn'));
+window.onload = () => {
+    updateClock();
+    fetchFinanceNews();
+    setInterval(updateClock, 1000);
+};
