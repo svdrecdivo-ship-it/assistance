@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Finance Hub</title>
+    <title>Finance Hub - Trần Bảo Nam</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <button id="dark-mode-toggle" class="btn-floating">🌙 Chế độ tối</button>
+    <button id="dark-mode-toggle" class="dark-mode-btn">🌓 Chế độ tối</button>
 
     <div class="tradingview-widget-container">
         <div class="tradingview-widget-container__widget"></div>
@@ -16,7 +16,8 @@
             "symbols": [
                 {"proName": "INDEX:VNI", "title": "VN-INDEX"},
                 {"proName": "FX_IDC:USDVND", "title": "USD/VND"},
-                {"proName": "OANDA:XAUUSD", "title": "VÀNG"}
+                {"proName": "OANDA:XAUUSD", "title": "VÀNG"},
+                {"proName": "BITSTAMP:BTCUSD", "title": "BTC"}
             ],
             "showSymbolLogo": true, "colorTheme": "light", "displayMode": "adaptive", "locale": "vi_VN"
         }
@@ -32,17 +33,20 @@
         <section class="spotlight-section">
             <div class="spotlight-card">
                 <h3 class="spotlight-title">🚀 TIÊU ĐIỂM NGÀNH HÔM NAY</h3>
-                <div id="ai-analysis-content"><p>Đang tải tin nóng nhất...</p></div>
+                <div id="ai-analysis-content"><p>Đang lấy tin nóng nhất cho Bạn...</p></div>
             </div>
         </section>
 
+        <div class="news-tabs">
+            <button class="tab-btn active" onclick="changeCategory('kinh-doanh')">Kinh Doanh</button>
+            <button class="tab-btn" onclick="changeCategory('ebank')">Tài Chính - Ngân Hàng</button>
+            <button class="tab-btn" onclick="changeCategory('chung-khoan')">Chứng Khoán</button>
+            <button class="tab-btn" onclick="changeCategory('thoi-su')">Thời Sự</button>
+        </div>
+
         <section class="news-section">
-            <div class="news-tabs">
-                <button class="tab-btn active" onclick="fetchNews('kinh-doanh')">Kinh Tế</button>
-                <button class="tab-btn" onclick="fetchNews('ebank')">Tài Chính</button>
-                <button class="tab-btn" onclick="fetchNews('thoi-su')">Chính Trị - Xã Hội</button>
-            </div>
-            <div id="news-grid" class="news-grid"></div>
+            <div id="news-grid" class="news-grid">
+                </div>
         </section>
 
         <section class="tools-section">
@@ -66,12 +70,12 @@
                     <button onclick="calcTax()">Tính Thuế</button>
                 </div>
             </div>
-            <div id="result-box" class="result-display">Kết quả hiển thị tại đây...</div>
+            <div id="result-box" class="result-display">Nhập số liệu để xem kết quả...</div>
         </section>
 
         <div class="ad-placement">
             <p class="ad-label">ADVERTISEMENT</p>
-            <div class="ad-container-small">
+            <div class="ad-container">
                 <script async="async" data-cfasync="false" src="https://pl29416190.profitablecpmratenetwork.com/83dd9a7b5b106b6582fb804a6c412d20/invoke.js"></script>
                 <div id="container-83dd9a7b5b106b6582fb804a6c412d20"></div>
             </div>
