@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finance Hub</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <button id="dark-mode-toggle" class="btn-floating">🌙 Chế độ tối</button>
+
+    <div class="tradingview-widget-container">
+        <div class="tradingview-widget-container__widget"></div>
+        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+        {
+            "symbols": [
+                {"proName": "INDEX:VNI", "title": "VN-INDEX"},
+                {"proName": "FX_IDC:USDVND", "title": "USD/VND"},
+                {"proName": "OANDA:XAUUSD", "title": "VÀNG"}
+            ],
+            "showSymbolLogo": true, "colorTheme": "light", "displayMode": "adaptive", "locale": "vi_VN"
+        }
+        </script>
+    </div>
+
+    <header class="main-header">
+        <h1>FINANCE HUB</h1>
+        <p id="clock" class="time-display"></p>
+    </header>
+
+    <div class="container">
+        <section class="spotlight-section">
+            <div class="spotlight-card">
+                <h3 class="spotlight-title">🚀 TIÊU ĐIỂM NGÀNH HÔM NAY</h3>
+                <div id="ai-analysis-content"><p>Đang tải tin nóng nhất...</p></div>
+            </div>
+        </section>
+
+        <section class="news-section">
+            <div class="news-tabs">
+                <button class="tab-btn active" onclick="fetchNews('kinh-doanh')">Kinh Tế</button>
+                <button class="tab-btn" onclick="fetchNews('ebank')">Tài Chính</button>
+                <button class="tab-btn" onclick="fetchNews('thoi-su')">Chính Trị - Xã Hội</button>
+            </div>
+            <div id="news-grid" class="news-grid"></div>
+        </section>
+
+        <section class="tools-section">
+            <h2 class="section-title">CÔNG CỤ TÀI CHÍNH</h2>
+            <div class="tools-flex-container">
+                <div class="tool-card">
+                    <h4>Gửi Tiết Kiệm / Lãi Vay</h4>
+                    <input type="number" id="principal" placeholder="Số tiền gốc (VNĐ)">
+                    <input type="number" id="rate" placeholder="Lãi suất (%/năm)">
+                    <input type="number" id="months" placeholder="Kỳ hạn (tháng)">
+                    <div class="btn-group">
+                        <button onclick="calcInterest()">Tính Lãi</button>
+                        <button onclick="calcFV()" class="btn-alt">Lãi Kép (FV)</button>
+                    </div>
+                </div>
+
+                <div class="tool-card">
+                    <h4>Ước Tính Thuế TNCN</h4>
+                    <input type="number" id="salary" placeholder="Tổng thu nhập (VNĐ)">
+                    <input type="number" id="dependents" placeholder="Số người phụ thuộc">
+                    <button onclick="calcTax()">Tính Thuế</button>
+                </div>
+            </div>
+            <div id="result-box" class="result-display">Kết quả hiển thị tại đây...</div>
+        </section>
+
+        <div class="ad-placement">
+            <p class="ad-label">ADVERTISEMENT</p>
+            <div class="ad-container-small">
+                <script async="async" data-cfasync="false" src="https://pl29416190.profitablecpmratenetwork.com/83dd9a7b5b106b6582fb804a6c412d20/invoke.js"></script>
+                <div id="container-83dd9a7b5b106b6582fb804a6c412d20"></div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>Trang tin tức và công cụ tổng hợp được phát triển bởi <strong>Trần Bảo Nam - 2026</strong></p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

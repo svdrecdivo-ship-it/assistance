@@ -1,0 +1,26 @@
+:root { --bg: #ffffff; --text: #1a1a1a; --card: #fdfdfd; --accent: #2c3e50; }
+.dark-mode { --bg: #121212; --text: #e0e0e0; --card: #1e1e1e; --accent: #3498db; }
+
+body { background: var(--bg); color: var(--text); transition: 0.3s; margin: 0; text-align: center; }
+
+/* Căn giữa đồng hồ */
+.time-display { display: block; margin: 10px auto; color: #666; font-size: 0.9rem; width: 100%; text-align: center; }
+
+.btn-floating { position: fixed; bottom: 20px; right: 20px; z-index: 1000; padding: 10px 20px; border-radius: 25px; border: none; background: var(--accent); color: white; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+
+/* Bố cục tin tức 3 cột đối xứng */
+.news-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 20px; text-align: left; }
+.news-item { background: var(--card); border: 1px solid #eee; padding: 15px; border-radius: 8px; transition: 0.3s; }
+.news-item:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-color: var(--accent); }
+
+/* Thu nhỏ quảng cáo */
+.ad-container-small { max-width: 468px; margin: 0 auto; transform: scale(0.9); overflow: hidden; }
+.ad-label { font-size: 10px; color: #bbb; margin-bottom: 5px; }
+
+/* Máy tính tài chính */
+.tools-flex-container { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
+.tool-card { width: 420px; background: var(--card); border: 1px solid #ddd; padding: 20px; border-radius: 10px; text-align: left; transition: 0.3s; }
+.tool-card:hover { transform: translateY(-3px); border-color: var(--accent); }
+
+.footer { padding: 40px; background: #f8f8f8; margin-top: 50px; border-top: 1px solid #eee; }
+.dark-mode .footer { background: #1a1a1a; border-color: #333; }
