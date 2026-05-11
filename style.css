@@ -1,94 +1,19 @@
-/* Biến màu sắc */
-:root {
-    --bg-color: #ffffff;
-    --text-color: #333;
-    --card-bg: #fff;
-    --accent-color: #2c3e50;
-    --border-color: #eee;
-}
-
-/* Màu cho Dark Mode */
-.dark-theme {
-    --bg-color: #1a1a1a;
-    --text-color: #e0e0e0;
-    --card-bg: #2d2d2d;
-    --accent-color: #3498db;
-    --border-color: #444;
-}
-
-body { 
-    background-color: var(--bg-color); 
-    color: var(--text-color); 
-    transition: all 0.3s ease; 
-    margin: 0; 
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-}
-
-/* Nút Dark Mode cố định */
-.dark-mode-btn {
-    position: fixed;
-    top: 80px;
-    right: 20px;
-    z-index: 1000;
-    padding: 10px 15px;
-    background: var(--accent-color);
-    color: white;
-    border: none;
-    border-radius: 20px;
-    cursor: pointer;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-}
-
+/* Căn giữa toàn bộ hệ thống */
 .container { max-width: 1200px; margin: auto; padding: 20px; }
+.main-header { text-align: center; padding: 30px 0; border-bottom: 1px solid #eee; }
 
-/* Tabs tin tức */
-.news-tabs { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
-.tab-btn { padding: 8px 16px; border: 1px solid var(--accent-color); background: transparent; color: var(--accent-color); border-radius: 5px; cursor: pointer; transition: 0.3s; }
-.tab-btn.active, .tab-btn:hover { background: var(--accent-color); color: white; }
-
-/* Grid tin tức */
+/* Grid tin tức đối xứng */
 .news-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; margin-bottom: 40px; }
+.news-item { background: #fff; border: 1px solid #eee; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.02); }
 
-/* HIỆU ỨNG HOVER CHO NEWS ITEM */
-.news-item { 
-    background: var(--card-bg); 
-    border: 1px solid var(--border-color); 
-    padding: 20px; 
-    border-radius: 8px; 
-    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-}
-.news-item:hover {
-    transform: translateY(-5px); /* Nổi lên */
-    box-shadow: 0 8px 20px rgba(0,0,0,0.15); /* Đổ bóng */
-    border-color: var(--accent-color); /* Đổi màu viền */
-}
+/* Đưa máy tính vào giữa */
+.tools-flex-container { display: flex; justify-content: center; gap: 30px; flex-wrap: wrap; margin-top: 20px; }
+.tool-card { width: 450px; background: #fafafa; border: 1px solid #ddd; padding: 25px; border-radius: 10px; }
 
-/* HIỆU ỨNG HOVER CHO MÁY TÍNH */
-.tool-card { 
-    width: 450px; 
-    background: var(--card-bg); 
-    border: 1px solid var(--border-color); 
-    padding: 25px; 
-    border-radius: 10px;
-    transition: transform 0.3s ease;
-}
-.tool-card:hover {
-    transform: scale(1.02); /* To lên nhẹ */
-}
+/* Quảng cáo nằm giữa máy tính và tên */
+.ad-placement { margin: 50px auto; text-align: center; max-width: 728px; }
+.ad-label { font-size: 10px; color: #bbb; margin-bottom: 5px; }
 
-/* Kết quả hiển thị */
-.result-display { 
-    margin-top: 30px; 
-    padding: 20px; 
-    background: var(--card-bg); 
-    border: 1px dashed var(--accent-color); 
-    text-align: center; 
-    font-weight: bold; 
-    min-height: 50px;
-}
+.section-title { text-align: center; margin: 40px 0 20px; font-size: 1.5rem; border-bottom: 2px solid #222; display: inline-block; width: 100%; padding-bottom: 10px; }
 
-/* Thu nhỏ quảng cáo */
-.ad-placement { margin: 60px auto; text-align: center; max-width: 300px; }
-.ad-container { transform: scale(0.8); }
-
-.footer { text-align: center; padding: 40px; border-top: 1px solid var(--border-color); }
+.footer { text-align: center; padding: 30px; background: #f4f4f4; border-top: 1px solid #ddd; }
