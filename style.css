@@ -1,123 +1,31 @@
 :root {
-    --bg: #f0f2f5;
-    --text: #1a1a1a;
-    --card: #ffffff;
-    --accent: #2980b9;
-    --gradient: linear-gradient(135deg, #2980b9, #3498db);
+    --bg: #f0f2f5; --text: #1a1a1a; --card: #ffffff; --accent: #2980b9;
     --shadow: 0 10px 30px rgba(0,0,0,0.08);
 }
-
 body.dark-theme {
-    --bg: #121212;
-    --text: #f5f5f5;
-    --card: #1e1e1e;
-    --accent: #3498db;
+    --bg: #121212; --text: #f5f5f5; --card: #1e1e1e; --accent: #3498db;
     --shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
 
-body { 
-    background: var(--bg); 
-    color: var(--text); 
-    transition: all 0.4s ease; 
-    margin: 0; 
-    font-family: 'Inter', 'Segoe UI', sans-serif; 
-}
-
-/* Nút Dark Mode "trôi" mượt mà */
-.dark-mode-btn {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    z-index: 1000;
-    padding: 15px 25px;
-    border-radius: 50px;
-    background: var(--gradient);
-    color: white;
-    border: none;
-    cursor: pointer;
-    box-shadow: 0 8px 20px rgba(52, 152, 219, 0.4);
-    font-weight: 600;
-    transition: 0.3s;
-}
-.dark-mode-btn:hover { transform: scale(1.05); }
-
+body { background: var(--bg); color: var(--text); transition: 0.4s; margin: 0; font-family: 'Segoe UI', sans-serif; }
 .container { max-width: 1200px; margin: auto; padding: 20px; }
 
-/* Bố cục Grid đối xứng 2 bên - 1 dưới */
-.tools-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
-    margin-top: 40px;
-}
+/* Bố cục Grid đối xứng 2 bên */
+.tools-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 20px; }
+.tool-card { background: var(--card); padding: 30px; border-radius: 20px; box-shadow: var(--shadow); transition: 0.3s; }
+.tool-card:hover { transform: translateY(-10px); }
 
-.tool-card {
-    background: var(--card);
-    padding: 35px;
-    border-radius: 20px;
-    box-shadow: var(--shadow);
-    border: 1px solid rgba(0,0,0,0.05);
-    transition: all 0.3s ease;
-}
+/* Kết quả ở giữa hàng dưới */
+.result-container { grid-column: 1 / span 2; display: flex; justify-content: center; margin-top: 20px; }
+.result-display { width: 65%; background: var(--card); padding: 25px; border: 2px dashed var(--accent); border-radius: 15px; text-align: center; font-weight: bold; box-shadow: var(--shadow); }
 
-/* Hiệu ứng đẹp khi di chuột vào máy tính */
-.tool-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.12);
-    border-color: var(--accent);
-}
+/* CSS cho Quảng cáo */
+.ad-placement { margin: 60px auto; text-align: center; }
+.ad-label { font-size: 11px; color: #888; letter-spacing: 1px; margin-bottom: 10px; }
+.ad-container { min-height: 100px; background: rgba(0,0,0,0.02); border-radius: 8px; padding: 10px; }
 
-/* Ô kết quả nằm giữa phía dưới */
-.result-container {
-    grid-column: 1 / span 2;
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-}
-
-.result-display {
-    width: 65%;
-    background: var(--card);
-    padding: 30px;
-    border: 2px dashed var(--accent);
-    border-radius: 15px;
-    text-align: center;
-    font-size: 1.3rem;
-    font-weight: bold;
-    color: var(--accent);
-    box-shadow: var(--shadow);
-    animation: fadeIn 0.5s ease;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-/* Input và Button đẹp hơn */
-input {
-    width: 100%;
-    padding: 12px;
-    margin: 12px 0;
-    border-radius: 10px;
-    border: 1px solid #ddd;
-    background: var(--bg);
-    color: var(--text);
-    outline: none;
-    transition: 0.3s;
-}
-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2); }
-
-button:not(.dark-mode-btn) {
-    padding: 12px 20px;
-    border-radius: 10px;
-    border: none;
-    background: var(--gradient);
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.3s;
-}
-button:hover { opacity: 0.9; transform: translateY(-2px); }
-
-.btn-alt { background: #f1c40f !important; color: #2c3e50 !important; }
+/* Các thành phần khác */
+.dark-mode-btn { position: fixed; bottom: 30px; right: 30px; z-index: 1000; padding: 12px 20px; border-radius: 50px; background: var(--accent); color: white; border: none; cursor: pointer; font-weight: bold; }
+input { width: 100%; padding: 12px; margin: 10px 0; border-radius: 8px; border: 1px solid #ddd; background: var(--bg); color: var(--text); box-sizing: border-box; }
+button:not(.dark-mode-btn) { padding: 12px; border-radius: 8px; border: none; background: var(--accent); color: white; cursor: pointer; font-weight: bold; }
+.btn-full { width: 100%; margin-top: 15px; }
