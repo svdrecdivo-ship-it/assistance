@@ -10,32 +10,30 @@
 <body>
     <button id="dark-mode-toggle" class="dark-mode-btn">🌓 Chế độ tối</button>
 
-    <header class="main-header" style="text-align: center; padding: 50px 0;">
-        <h1 style="font-size: 2.5rem; letter-spacing: 2px;"><i class="fas fa-chart-pie"></i> FINANCE HUB</h1>
-        <p id="clock" style="font-size: 1.1rem; opacity: 0.8;"></p>
+    <header class="main-header">
+        <h1><i class="fas fa-chart-pie"></i> FINANCE HUB</h1>
+        <p id="clock"></p>
     </header>
 
     <div class="container">
-        <div class="news-tabs" style="display: flex; justify-content: center; gap: 15px; margin-bottom: 30px;">
+        <div class="news-tabs">
             <button class="tab-btn active" onclick="changeCategory('kinh-doanh', this)">Kinh Doanh</button>
             <button class="tab-btn" onclick="changeCategory('ebank', this)">Ngân Hàng</button>
             <button class="tab-btn" onclick="changeCategory('chung-khoan', this)">Chứng Khoán</button>
         </div>
-
-        <div id="news-grid" class="news-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-bottom: 50px;">
-            </div>
+        <div id="news-grid" class="news-grid"></div>
 
         <section class="tools-section">
-            <h2 style="text-align: center; margin-bottom: 40px;">CÔNG CỤ TÀI CHÍNH CHUYÊN SÂU</h2>
+            <h2 class="section-title">CÔNG CỤ TÀI CHÍNH</h2>
             <div class="tools-grid">
                 <div class="tool-card">
                     <h4><i class="fas fa-vault"></i> Tiết Kiệm & Lãi Vay</h4>
                     <input type="number" id="principal" placeholder="Số tiền gốc (VNĐ)">
                     <input type="number" id="rate" placeholder="Lãi suất (%/năm)">
                     <input type="number" id="months" placeholder="Kỳ hạn (tháng)">
-                    <div style="display: flex; gap: 10px; margin-top: 15px;">
-                        <button style="flex:1" onclick="calcInterest()">Tính Lãi</button>
-                        <button style="flex:1" class="btn-alt" onclick="calcFV()">Lãi Kép</button>
+                    <div class="btn-group">
+                        <button onclick="calcInterest()">Tính Lãi</button>
+                        <button class="btn-alt" onclick="calcFV()">Lãi Kép</button>
                     </div>
                 </div>
 
@@ -43,19 +41,25 @@
                     <h4><i class="fas fa-file-invoice-dollar"></i> Thuế Thu Nhập</h4>
                     <input type="number" id="salary" placeholder="Tổng thu nhập (VNĐ)">
                     <input type="number" id="dependents" placeholder="Số người phụ thuộc">
-                    <button style="width: 100%; margin-top: 15px;" onclick="calcTax()">Tính Thuế TNCN</button>
+                    <button class="btn-full" onclick="calcTax()">Tính Thuế TNCN</button>
                 </div>
 
                 <div class="result-container">
-                    <div id="result-box" class="result-display">
-                        Kết quả tính toán sẽ hiển thị tại đây
-                    </div>
+                    <div id="result-box" class="result-display">Kết quả hiển thị tại đây</div>
                 </div>
             </div>
         </section>
+
+        <div class="ad-placement">
+            <p class="ad-label">ADVERTISEMENT</p>
+            <div class="ad-container">
+                <script async="async" data-cfasync="false" src="https://pl29416190.profitablecpmratenetwork.com/83dd9a7b5b106b6582fb804a6c412d20/invoke.js"></script>
+                <div id="container-83dd9a7b5b106b6582fb804a6c412d20"></div>
+            </div>
+        </div>
     </div>
 
-    <footer style="text-align: center; padding: 60px; opacity: 0.6; font-size: 0.9rem;">
+    <footer class="footer">
         <p>© 2026 Finance Hub - Developed for Community</p>
     </footer>
 
