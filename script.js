@@ -1,6 +1,6 @@
-let allNews = []; // Lưu trữ toàn bộ tin để lọc
-let currentTopic = 'all';
-let currentTimeFilter = 'today';
+let newsStore = [];
+let timeFilter = 'today';
+let topicFilter = 'all';
 
 function updateClock() {
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' };
@@ -9,81 +9,71 @@ function updateClock() {
 
 async function fetchFinanceNews() {
     const rssUrl = 'https://vnexpress.net/rss/kinh-doanh.rss';
-    const apiProxy = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}&api_key=your_api_key_if_any`; // Thêm API key nếu cần ổn định hơn
+    const apiProxy = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`;
     
     try {
         const res = await fetch(apiProxy);
         const data = await res.json();
         if (data.status === 'ok') {
-            allNews = data.items;
-            renderNews(); // Gọi hàm hiển thị
-            // Cập nhật tiêu điểm là tin mới nhất
-            document.getElementById('ai-analysis-content').innerHTML = `🚀 TIÊU ĐIỂM: ${allNews[0].title}`;
+            newsStore = data.items;
+            // Tin tiêu điểm luôn là tin mới nhất tuyệt đối
+            document.getElementById('ai-analysis-content').innerHTML = `<p><strong>Mới nhất:</strong> ${newsStore[0].title}</p>`;
+            renderNews();
         }
     } catch (e) {
-        document.getElementById('news-grid').innerHTML = "<p>Đang chờ cập nhật tin mới...</p>";
+        console.error("Lỗi:", e);
     }
 }
 
 function renderNews() {
     const grid = document.getElementById('news-grid');
-    const now = new Date();
+    const todayStr = new Date().toDateString();
     
-    // Logic lọc tin
-    let filtered = allNews.filter(item => {
-        const pubDate = new Date(item.pubDate);
-        const isToday = pubDate.toDateString() === now.toDateString();
+    let filtered = newsStore.filter(item => {
+        const itemDate = new Date(item.pubDate).toDateString();
+        const isToday = itemDate === todayStr;
         
-        // Lọc theo thời gian
-        const timeMatch = (currentTimeFilter === 'today') ? isToday : !isToday;
+        const matchesTime = (timeFilter === 'today') ? isToday : !isToday;
+        const matchesTopic = (topicFilter === 'all') || 
+                             item.title.toLowerCase().includes(topicFilter) || 
+                             item.description.toLowerCase().includes(topicFilter);
         
-        // Lọc theo chủ đề (tìm từ khóa trong tiêu đề/mô tả)
-        const topicMatch = (currentTopic === 'all') || 
-                           item.title.toLowerCase().includes(currentTopic) || 
-                           item.description.toLowerCase().includes(currentTopic);
-        
-        return timeMatch && topicMatch;
+        return matchesTime && matchesTopic;
     });
 
     if (filtered.length === 0) {
-        grid.innerHTML = `<p style="grid-column: 1/-1; text-align:center;">Chưa có bản tin nào trong mục này hôm nay.</p>`;
+        grid.innerHTML = `<p style="grid-column:1/-1; text-align:center; padding:20px;">Không có bản tin nào khớp với lựa chọn này.</p>`;
         return;
     }
 
     grid.innerHTML = filtered.slice(0, 8).map(item => `
         <div class="news-item">
-            <h3>${item.title}</h3>
-            <p>${item.description.replace(/<[^>]*>?/gm, '').substring(0, 120)}...</p>
-            <a href="${item.link}" target="_blank" style="color:#1a237e; font-weight:bold; text-decoration:none;">Xem thêm →</a>
+            <h3 style="font-size:1.1rem; color:#1a237e;">${item.title}</h3>
+            <p style="font-size:0.9rem; color:#555;">${item.description.replace(/<[^>]*>?/gm, '').substring(0, 120)}...</p>
+            <a href="${item.link}" target="_blank" style="text-decoration:none; font-weight:bold; color:#d4af37;">Xem thêm →</a>
         </div>
     `).join('');
 }
 
-// Xử lý chuyển Tab
-function filterByTime(time) {
-    currentTimeFilter = time;
-    updateTabUI('time-tabs', time === 'today' ? 0 : 1);
+// Xử lý Tab
+function filterTime(type) {
+    timeFilter = type;
+    document.querySelectorAll('#time-tabs .tab-item').forEach((el, i) => el.classList.toggle('active', (i === 0 && type === 'today') || (i === 1 && type === 'older')));
     renderNews();
 }
 
-function filterByTopic(topic) {
-    currentTopic = topic;
-    const index = topic === 'all' ? 0 : (topic === 'chứng khoán' ? 1 : (topic === 'ngân hàng' ? 2 : 3));
-    updateTabUI('topic-tabs', index);
+function filterTopic(topic) {
+    topicFilter = topic;
+    const tabs = document.querySelectorAll('#topic-tabs .tab-item');
+    const topics = ['all', 'chứng khoán', 'ngân hàng', 'vàng'];
+    tabs.forEach((el, i) => el.classList.toggle('active', topics[i] === topic));
     renderNews();
 }
 
-function updateTabUI(parentId, activeIndex) {
-    const tabs = document.getElementById(parentId).querySelectorAll('.tab-item');
-    tabs.forEach((tab, idx) => {
-        tab.classList.toggle('active', idx === activeIndex);
-    });
-}
-
-// Các hàm tính toán giữ nguyên logic cũ nhưng cập nhật UI
+// Tính toán giữ nguyên logic Nam thích
 function animateResult(val) {
     const box = document.getElementById('result-box');
-    box.innerHTML = `Kết quả tạm tính: <b style="font-size:1.5rem;">${val.toLocaleString()} VNĐ</b>`;
+    box.innerHTML = `Kết quả: <b style="font-size:1.5rem;">${val.toLocaleString()} VNĐ</b>`;
 }
 
 function calcInterest() {
