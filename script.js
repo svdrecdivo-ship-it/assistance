@@ -3,23 +3,19 @@ function updateClock() {
     document.getElementById('clock').innerText = new Date().toLocaleDateString('vi-VN', options);
 }
 
-// Hàm lấy tin tức - Đã tối ưu hóa để lấy tin mới nhất
 async function fetchFinanceNews() {
     const rssUrl = 'https://vnexpress.net/rss/kinh-doanh.rss';
-    // Sử dụng cache-buster để tránh tin cũ bị lưu lại
     const apiProxy = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}&t=${new Date().getTime()}`;
     
     try {
         const res = await fetch(apiProxy);
         const data = await res.json();
         if (data.status === 'ok') {
-            // Tiêu điểm
             document.getElementById('ai-analysis-content').innerHTML = `
                 <p style="font-weight:bold; color:#1a237e;">${data.items[0].title}</p>
                 <p style="font-size:0.9rem; color:#666;">${data.items[0].description.replace(/<[^>]*>?/gm, '').substring(0, 150)}...</p>
             `;
             
-            // Grid tin tức
             const grid = document.getElementById('news-grid');
             grid.innerHTML = data.items.slice(1, 10).map(item => `
                 <div class="news-item">
@@ -72,5 +68,5 @@ window.onload = () => {
     updateClock();
     fetchFinanceNews();
     setInterval(updateClock, 1000);
-    setInterval(fetchFinanceNews, 300000); // Tự động làm mới tin sau mỗi 5 phút
+    setInterval(fetchFinanceNews, 300000); 
 };
