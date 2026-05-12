@@ -8,32 +8,50 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header class="main-header" style="text-align:center; padding:40px 0; background:linear-gradient(135deg, #1a237e, #283593); color:white;">
+    <div class="tradingview-widget-container">
+        <div class="tradingview-widget-container__widget"></div>
+        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+        {
+            "symbols": [
+                {"proName": "INDEX:VNI", "title": "VN-INDEX"},
+                {"proName": "FX_IDC:USDVND", "title": "USD/VND"},
+                {"proName": "OANDA:XAUUSD", "title": "VÀNG"},
+                {"proName": "BITSTAMP:BTCUSD", "title": "BTC"}
+            ],
+            "showSymbolLogo": true, "colorTheme": "light", "displayMode": "adaptive", "locale": "vi_VN"
+        }
+        </script>
+    </div>
+
+    <header class="main-header">
         <h1><i class="fas fa-chart-line"></i> FINANCE HUB</h1>
-        <p id="clock"></p>
+        <p id="clock" class="time-display"></p>
     </header>
 
     <div class="container">
         <section class="spotlight-section">
-            <div class="spotlight-card" id="spotlight-box">
-                <h3 id="ai-analysis-content">Đang tải tiêu điểm...</h3>
+            <div class="spotlight-card">
+                <h3 class="spotlight-title"><i class="fas fa-bolt" style="color: #ffd700;"></i> TIÊU ĐIỂM NGÀNH HÔM NAY</h3>
+                <div id="ai-analysis-content">
+                    <p>Đang kết nối dữ liệu thị trường...</p>
+                </div>
             </div>
         </section>
 
         <section class="news-section">
-            <h2 style="text-align:center; margin-bottom:10px;">DÒNG THỜI SỰ TÀI CHÍNH</h2>
+            <h2 class="section-title" style="text-align:center;">DÒNG THỜI SỰ TÀI CHÍNH</h2>
             
             <div class="tabs-container">
                 <div class="tab-group" id="time-tabs">
-                    <div class="tab-item active" onclick="filterByTime('today')">Hôm nay</div>
-                    <div class="tab-item" onclick="filterByTime('older')">Tin trước đó</div>
+                    <div class="tab-item active" onclick="filterTime('today')">Hôm nay</div>
+                    <div class="tab-item" onclick="filterTime('older')">Tin trước đó</div>
                 </div>
                 <br>
                 <div class="tab-group" id="topic-tabs">
-                    <div class="tab-item active" onclick="filterByTopic('all')">Tất cả</div>
-                    <div class="tab-item" onclick="filterByTopic('chứng khoán')">Chứng khoán</div>
-                    <div class="tab-item" onclick="filterByTopic('ngân hàng')">Ngân hàng</div>
-                    <div class="tab-item" onclick="filterByTopic('vàng')">Vàng & Ngoại tệ</div>
+                    <div class="tab-item active" onclick="filterTopic('all')">Tất cả</div>
+                    <div class="tab-item" onclick="filterTopic('chứng khoán')">Chứng khoán</div>
+                    <div class="tab-item" onclick="filterTopic('ngân hàng')">Ngân hàng</div>
+                    <div class="tab-item" onclick="filterTopic('vàng')">Vàng & Ngoại tệ</div>
                 </div>
             </div>
 
@@ -41,14 +59,14 @@
         </section>
 
         <section class="tools-section">
-            <h2 style="text-align:center;">CÔNG CỤ TÀI CHÍNH</h2>
+            <h2 class="section-title" style="text-align:center;">CÔNG CỤ TÀI CHÍNH</h2>
             <div class="tools-flex-container">
                 <div class="tool-card">
                     <h4><i class="fas fa-piggy-bank"></i> Tiết Kiệm / Lãi Vay</h4>
                     <input type="number" id="principal" placeholder="Số tiền gốc (VNĐ)">
                     <input type="number" id="rate" placeholder="Lãi suất (%/năm)">
                     <input type="number" id="months" placeholder="Kỳ hạn (tháng)">
-                    <div style="display:flex; gap:10px;">
+                    <div class="btn-group" style="display:flex; gap:10px;">
                         <button onclick="calcInterest()" style="flex:1;">Tính Lãi</button>
                         <button onclick="calcFV()" style="flex:1; background:#ffd700; color:#333;">Lãi Kép</button>
                     </div>
@@ -65,7 +83,8 @@
         </section>
 
         <div class="ad-placement">
-            <script async src="https://pl29416190.profitablecpmratenetwork.com/83dd9a7b5b106b6582fb804a6c412d20/invoke.js"></script>
+            <p class="ad-label">ADVERTISEMENT</p>
+            <script async="async" data-cfasync="false" src="https://pl29416190.profitablecpmratenetwork.com/83dd9a7b5b106b6582fb804a6c412d20/invoke.js"></script>
             <div id="container-83dd9a7b5b106b6582fb804a6c412d20"></div>
         </div>
     </div>
@@ -76,4 +95,4 @@
 
     <script src="script.js"></script>
 </body>
-</html>s
+</html>
