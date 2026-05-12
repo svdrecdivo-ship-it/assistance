@@ -70,3 +70,33 @@ window.onload = () => {
     setInterval(updateClock, 1000);
     setInterval(fetchFinanceNews, 300000); 
 };
+// Thay đổi hàm fetchFinanceNews một chút ở phần link
+async function fetchFinanceNews() {
+    const rssUrl = 'https://vnexpress.net/rss/kinh-doanh.rss';
+    // Thêm chuỗi ngẫu nhiên &nocache để VnExpress không gửi tin cũ đã lưu
+    const apiProxy = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}&nocache=${Math.random()}`;
+    
+    try {
+        const res = await fetch(apiProxy);
+        const data = await res.json();
+        if (data.status === 'ok') {
+            // Hiển thị tiêu điểm
+            document.getElementById('ai-analysis-content').innerHTML = `
+                <p style="font-weight:bold; color:#1a237e; margin:0;">${data.items[0].title}</p>
+                <p style="font-size:0.9rem; color:#666; margin-top:5px;">${data.items[0].description.replace(/<[^>]*>?/gm, '').substring(0, 150)}...</p>
+            `;
+            
+            // Hiển thị lưới tin
+            const grid = document.getElementById('news-grid');
+            grid.innerHTML = data.items.slice(1, 10).map(item => `
+                <div class="news-item">
+                    <h3>${item.title}</h3>
+                    <p>${item.description.replace(/<[^>]*>?/gm, '').substring(0, 100)}...</p>
+                    <a href="${item.link}" target="_blank">Đọc tiếp →</a>
+                </div>
+            `).join('');
+        }
+    } catch (e) {
+        console.log("Lỗi cập nhật tin tức.");
+    }
+}
