@@ -1,86 +1,49 @@
-let newsStore = [];
-let timeFilter = 'today';
-let topicFilter = 'all';
-
 function updateClock() {
     const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' };
     document.getElementById('clock').innerText = new Date().toLocaleDateString('vi-VN', options);
 }
 
+// Hàm lấy tin tức - Đã tối ưu hóa để lấy tin mới nhất
 async function fetchFinanceNews() {
     const rssUrl = 'https://vnexpress.net/rss/kinh-doanh.rss';
-    const apiProxy = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`;
+    // Sử dụng cache-buster để tránh tin cũ bị lưu lại
+    const apiProxy = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}&t=${new Date().getTime()}`;
     
     try {
         const res = await fetch(apiProxy);
         const data = await res.json();
         if (data.status === 'ok') {
-            newsStore = data.items;
-            // Tin tiêu điểm luôn là tin mới nhất tuyệt đối
-            document.getElementById('ai-analysis-content').innerHTML = `<p><strong>Mới nhất:</strong> ${newsStore[0].title}</p>`;
-            renderNews();
+            // Tiêu điểm
+            document.getElementById('ai-analysis-content').innerHTML = `
+                <p style="font-weight:bold; color:#1a237e;">${data.items[0].title}</p>
+                <p style="font-size:0.9rem; color:#666;">${data.items[0].description.replace(/<[^>]*>?/gm, '').substring(0, 150)}...</p>
+            `;
+            
+            // Grid tin tức
+            const grid = document.getElementById('news-grid');
+            grid.innerHTML = data.items.slice(1, 10).map(item => `
+                <div class="news-item">
+                    <h3 style="font-size:1.1rem; color:#1a237e; margin-top:0;">${item.title}</h3>
+                    <p style="font-size:0.9rem; color:#555;">${item.description.replace(/<[^>]*>?/gm, '').substring(0, 100)}...</p>
+                    <a href="${item.link}" target="_blank" style="text-decoration:none; font-weight:bold; color:#d4af37;">Xem thêm →</a>
+                </div>
+            `).join('');
         }
     } catch (e) {
-        console.error("Lỗi:", e);
+        console.error("Lỗi cập nhật tin tức:", e);
     }
 }
 
-function renderNews() {
-    const grid = document.getElementById('news-grid');
-    const todayStr = new Date().toDateString();
-    
-    let filtered = newsStore.filter(item => {
-        const itemDate = new Date(item.pubDate).toDateString();
-        const isToday = itemDate === todayStr;
-        
-        const matchesTime = (timeFilter === 'today') ? isToday : !isToday;
-        const matchesTopic = (topicFilter === 'all') || 
-                             item.title.toLowerCase().includes(topicFilter) || 
-                             item.description.toLowerCase().includes(topicFilter);
-        
-        return matchesTime && matchesTopic;
-    });
-
-    if (filtered.length === 0) {
-        grid.innerHTML = `<p style="grid-column:1/-1; text-align:center; padding:20px;">Không có bản tin nào khớp với lựa chọn này.</p>`;
-        return;
-    }
-
-    grid.innerHTML = filtered.slice(0, 8).map(item => `
-        <div class="news-item">
-            <h3 style="font-size:1.1rem; color:#1a237e;">${item.title}</h3>
-            <p style="font-size:0.9rem; color:#555;">${item.description.replace(/<[^>]*>?/gm, '').substring(0, 120)}...</p>
-            <a href="${item.link}" target="_blank" style="text-decoration:none; font-weight:bold; color:#d4af37;">Xem thêm →</a>
-        </div>
-    `).join('');
-}
-
-// Xử lý Tab
-function filterTime(type) {
-    timeFilter = type;
-    document.querySelectorAll('#time-tabs .tab-item').forEach((el, i) => el.classList.toggle('active', (i === 0 && type === 'today') || (i === 1 && type === 'older')));
-    renderNews();
-}
-
-function filterTopic(topic) {
-    topicFilter = topic;
-    const tabs = document.querySelectorAll('#topic-tabs .tab-item');
-    const topics = ['all', 'chứng khoán', 'ngân hàng', 'vàng'];
-    tabs.forEach((el, i) => el.classList.toggle('active', topics[i] === topic));
-    renderNews();
-}
-
-// Tính toán giữ nguyên logic Nam thích
 function animateResult(val) {
     const box = document.getElementById('result-box');
-    box.innerHTML = `Kết quả: <b style="font-size:1.5rem;">${val.toLocaleString()} VNĐ</b>`;
+    box.innerHTML = `Kết quả tạm tính: <b style="font-size:1.6rem;">${val.toLocaleString()} VNĐ</b>`;
 }
 
 function calcInterest() {
     const p = parseFloat(document.getElementById('principal').value);
     const r = parseFloat(document.getElementById('rate').value) / 100 / 12;
     const n = parseFloat(document.getElementById('months').value);
-    if (isNaN(p) || isNaN(r) || isNaN(n)) return alert("Nhập đủ số liệu nha Nam!");
+    if (isNaN(p) || isNaN(r) || isNaN(n)) return alert("Vui lòng nhập đủ số liệu nhé!");
     animateResult(Math.round(p * r * n));
 }
 
@@ -88,7 +51,7 @@ function calcFV() {
     const p = parseFloat(document.getElementById('principal').value);
     const r = parseFloat(document.getElementById('rate').value) / 100 / 12;
     const n = parseFloat(document.getElementById('months').value);
-    if (isNaN(p) || isNaN(r) || isNaN(n)) return alert("Nhập đủ số liệu nha Nam!");
+    if (isNaN(p) || isNaN(r) || isNaN(n)) return alert("Vui lòng nhập đủ số liệu nhé!");
     animateResult(Math.round(p * Math.pow((1 + r), n)));
 }
 
@@ -109,4 +72,5 @@ window.onload = () => {
     updateClock();
     fetchFinanceNews();
     setInterval(updateClock, 1000);
+    setInterval(fetchFinanceNews, 300000); // Tự động làm mới tin sau mỗi 5 phút
 };
