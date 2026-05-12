@@ -1,98 +1,68 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Finance Hub - Trần Bảo Nam</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div class="tradingview-widget-container">
-        <div class="tradingview-widget-container__widget"></div>
-        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
-        {
-            "symbols": [
-                {"proName": "INDEX:VNI", "title": "VN-INDEX"},
-                {"proName": "FX_IDC:USDVND", "title": "USD/VND"},
-                {"proName": "OANDA:XAUUSD", "title": "VÀNG"},
-                {"proName": "BITSTAMP:BTCUSD", "title": "BTC"}
-            ],
-            "showSymbolLogo": true, "colorTheme": "light", "displayMode": "adaptive", "locale": "vi_VN"
-        }
-        </script>
-    </div>
+:root {
+    --primary-color: #1a237e;
+    --accent-color: #ffd700;
+    --bg-color: #f8f9fa;
+    --card-bg: #ffffff;
+}
 
-    <header class="main-header">
-        <h1><i class="fas fa-chart-line"></i> FINANCE HUB</h1>
-        <p id="clock" class="time-display"></p>
-    </header>
+body { font-family: 'Segoe UI', sans-serif; background: var(--bg-color); margin: 0; overflow-x: hidden; }
+.container { max-width: 1200px; margin: auto; padding: 20px; }
 
-    <div class="container">
-        <section class="spotlight-section">
-            <div class="spotlight-card">
-                <h3 class="spotlight-title"><i class="fas fa-bolt" style="color: #ffd700;"></i> TIÊU ĐIỂM NGÀNH HÔM NAY</h3>
-                <div id="ai-analysis-content">
-                    <p>Đang kết nối dữ liệu thị trường...</p>
-                </div>
-            </div>
-        </section>
+/* Header & Clock */
+.main-header { 
+    background: linear-gradient(135deg, var(--primary-color), #283593);
+    color: white; text-align: center; padding: 50px 0; 
+}
+.time-display { font-size: 1rem; opacity: 0.8; margin-top: 10px; }
 
-        <section class="news-section">
-            <h2 class="section-title" style="text-align:center;">DÒNG THỜI SỰ TÀI CHÍNH</h2>
-            
-            <div class="tabs-container">
-                <div class="tab-group" id="time-tabs">
-                    <div class="tab-item active" onclick="filterTime('today')">Hôm nay</div>
-                    <div class="tab-item" onclick="filterTime('older')">Tin trước đó</div>
-                </div>
-                <br>
-                <div class="tab-group" id="topic-tabs">
-                    <div class="tab-item active" onclick="filterTopic('all')">Tất cả</div>
-                    <div class="tab-item" onclick="filterTopic('chứng khoán')">Chứng khoán</div>
-                    <div class="tab-item" onclick="filterTopic('ngân hàng')">Ngân hàng</div>
-                    <div class="tab-item" onclick="filterTopic('vàng')">Vàng & Ngoại tệ</div>
-                </div>
-            </div>
+/* Spotlight */
+.spotlight-card {
+    background: white; border-left: 5px solid var(--accent-color);
+    padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    margin: -30px auto 40px; max-width: 900px; animation: slideIn 0.8s ease;
+}
 
-            <div id="news-grid" class="news-grid"></div>
-        </section>
+/* News Grid */
+.news-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px; }
+.news-item { 
+    background: white; padding: 25px; border-radius: 15px; 
+    transition: 0.3s; box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+.news-item:hover { transform: translateY(-8px); box-shadow: 0 12px 25px rgba(0,0,0,0.1); }
 
-        <section class="tools-section">
-            <h2 class="section-title" style="text-align:center;">CÔNG CỤ TÀI CHÍNH</h2>
-            <div class="tools-flex-container">
-                <div class="tool-card">
-                    <h4><i class="fas fa-piggy-bank"></i> Tiết Kiệm / Lãi Vay</h4>
-                    <input type="number" id="principal" placeholder="Số tiền gốc (VNĐ)">
-                    <input type="number" id="rate" placeholder="Lãi suất (%/năm)">
-                    <input type="number" id="months" placeholder="Kỳ hạn (tháng)">
-                    <div class="btn-group" style="display:flex; gap:10px;">
-                        <button onclick="calcInterest()" style="flex:1;">Tính Lãi</button>
-                        <button onclick="calcFV()" style="flex:1; background:#ffd700; color:#333;">Lãi Kép</button>
-                    </div>
-                </div>
+/* BỐ CỤC ĐỐI XỨNG CHO CÔNG CỤ */
+.tools-flex-container { 
+    display: flex; 
+    gap: 30px; 
+    justify-content: space-between; 
+    margin-top: 20px;
+}
+.tool-card { 
+    flex: 1; /* Hai ô tự động chia đều không gian */
+    background: white; 
+    padding: 30px; 
+    border-radius: 20px; 
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08); 
+}
 
-                <div class="tool-card">
-                    <h4><i class="fas fa-calculator"></i> Ước Tính Thuế TNCN</h4>
-                    <input type="number" id="salary" placeholder="Tổng thu nhập (VNĐ)">
-                    <input type="number" id="dependents" placeholder="Số người phụ thuộc">
-                    <button onclick="calcTax()" style="width:100%; margin-top:54px;">Tính Thuế</button>
-                </div>
-            </div>
-            <div id="result-box" class="result-display">Nhập số liệu để xem kết quả...</div>
-        </section>
+/* KẾT QUẢ CĂN GIỮA NẰM DƯỚI */
+.result-display {
+    margin: 40px auto;
+    padding: 25px;
+    background: #e8eaf6;
+    border-radius: 15px;
+    text-align: center;
+    font-weight: bold;
+    color: var(--primary-color);
+    max-width: 600px;
+    border: 1px dashed var(--primary-color);
+}
 
-        <div class="ad-placement">
-            <p class="ad-label">ADVERTISEMENT</p>
-            <script async="async" data-cfasync="false" src="https://pl29416190.profitablecpmratenetwork.com/83dd9a7b5b106b6582fb804a6c412d20/invoke.js"></script>
-            <div id="container-83dd9a7b5b106b6582fb804a6c412d20"></div>
-        </div>
-    </div>
+input { width: 100%; padding: 14px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
+button { background: var(--primary-color); color: white; border: none; padding: 14px 25px; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.3s; }
+button:hover { opacity: 0.9; transform: scale(1.02); }
 
-    <footer class="footer">
-        <p>Phát triển bởi <strong>Trần Bảo Nam - 2026</strong></p>
-    </footer>
+.ad-placement { margin: 50px auto; text-align: center; }
+.footer { background: #222; color: white; text-align: center; padding: 40px; margin-top: 40px; }
 
-    <script src="script.js"></script>
-</body>
-</html>
+@keyframes slideIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
