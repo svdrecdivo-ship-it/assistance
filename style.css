@@ -1,55 +1,64 @@
-/* Giữ nguyên các phần cũ và cập nhật thêm các class mới */
 :root {
     --primary-color: #1a237e;
     --accent-color: #ffd700;
     --bg-color: #f8f9fa;
+    --card-bg: #ffffff;
 }
 
 body { font-family: 'Segoe UI', sans-serif; background: var(--bg-color); margin: 0; }
 .container { max-width: 1200px; margin: auto; padding: 20px; }
 
-/* Hệ thống Tab căn giữa */
-.tabs-container { text-align: center; margin: 20px 0; }
-.tab-group { display: inline-flex; gap: 10px; margin-bottom: 15px; background: #eee; padding: 5px; border-radius: 30px; }
-.tab-item { 
-    padding: 8px 20px; cursor: pointer; border-radius: 25px; 
-    transition: 0.3s; font-weight: 600; font-size: 0.9rem; color: #666;
+.main-header { 
+    background: linear-gradient(135deg, var(--primary-color), #283593);
+    color: white; text-align: center; padding: 50px 0; 
 }
+
+/* Giữ nguyên cấu trúc Spotlight/Tin vắn của Nam */
+.spotlight-card {
+    background: white; border-left: 5px solid var(--accent-color);
+    padding: 20px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    margin: -25px auto 30px; max-width: 800px; animation: slideIn 0.8s ease;
+}
+
+/* Hệ thống Tab căn giữa cho Tin tức */
+.tabs-container { text-align: center; margin: 20px 0; }
+.tab-group { display: inline-flex; gap: 8px; margin-bottom: 10px; background: #e0e0e0; padding: 5px; border-radius: 30px; }
+.tab-item { padding: 6px 18px; cursor: pointer; border-radius: 20px; font-weight: 600; font-size: 0.85rem; color: #555; transition: 0.3s; }
 .tab-item.active { background: var(--primary-color); color: white; }
 
-/* Grid tin tức */
-.news-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; margin-bottom: 40px; }
+.news-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
 .news-item { 
     background: white; padding: 20px; border-radius: 12px; 
-    transition: 0.3s; box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    transition: 0.3s; box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
-.news-item:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+.news-item:hover { transform: translateY(-8px); box-shadow: 0 12px 25px rgba(0,0,0,0.1); }
 
-/* Dàn hàng ngang 2 bảng tính */
+/* ĐIỀU CHỈNH ĐỐI XỨNG: Dàn 2 bảng tính hàng ngang */
 .tools-flex-container { 
     display: flex; 
-    justify-content: space-between; /* Đẩy 2 bảng ra 2 bên cho đối xứng */
-    gap: 20px; 
-    margin-top: 20px; 
+    justify-content: space-between; 
+    gap: 30px; 
+    margin-bottom: 20px;
 }
 .tool-card { 
-    flex: 1; /* Cho phép 2 bảng có độ rộng bằng nhau */
+    flex: 1; /* Hai bảng rộng bằng nhau */
     background: white; padding: 25px; 
     border-radius: 15px; box-shadow: 0 8px 20px rgba(0,0,0,0.08); 
 }
 
-/* Kết quả nằm dưới và căn giữa */
+/* Dòng kết quả căn giữa dưới 2 bảng tính */
 .result-display {
-    margin: 30px auto;
-    width: 60%;
+    text-align: center;
     padding: 20px;
     background: #e8eaf6;
     border-radius: 12px;
-    text-align: center;
+    margin: 20px auto;
     font-weight: bold;
     color: var(--primary-color);
-    box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
+    width: 100%;
 }
 
 .ad-placement { margin: 50px auto; text-align: center; }
 .footer { background: #222; color: white; text-align: center; padding: 30px; margin-top: 40px; }
+
+@keyframes slideIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
