@@ -8,40 +8,40 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="tradingview-widget-container">
-        <div class="tradingview-widget-container__widget"></div>
-        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
-        {
-            "symbols": [
-                {
-                    "proName": "HOSE:VNINDEX",
-                    "title": "VN-INDEX"
-                },
-                {
-                    "proName": "FX_IDC:USDVND",
-                    "title": "USD/VND"
-                },
-                {
-                    "proName": "OANDA:XAUUSD",
-                    "title": "VÀNG THẾ GIỚI"
-                },
-                {
-                    "proName": "BITSTAMP:BTCUSD",
-                    "title": "BITCOIN"
-                },
-                {
-                    "proName": "TVC:UKOIL",
-                    "title": "DẦU BRENT"
-                }
-            ],
-            "showSymbolLogo": true,
-            "colorTheme": "light",
-            "isTransparent": false,
-            "displayMode": "adaptive",
-            "locale": "vi_VN"
-        }
-        </script>
-    </div>
+   <div class="tradingview-widget-container">
+    <div class="tradingview-widget-container__widget"></div>
+    <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+    {
+        "symbols": [
+            {
+                "proName": "INDEX:VNC10",
+                "title": "VN-INDEX (Proxy)"
+            },
+            {
+                "description": "USD/VND",
+                "proName": "FX_IDC:USDVND"
+            },
+            {
+                "description": "VÀNG",
+                "proName": "OANDA:XAUUSD"
+            },
+            {
+                "description": "DẦU BRENT",
+                "proName": "TVC:UKOIL"
+            },
+            {
+                "description": "BITCOIN",
+                "proName": "BITSTAMP:BTCUSD"
+            }
+        ],
+        "showSymbolLogo": true,
+        "colorTheme": "light",
+        "isTransparent": false,
+        "displayMode": "adaptive",
+        "locale": "vi_VN"
+    }
+    </script>
+</div>
 
     <header class="main-header">
         <h1><i class="fas fa-chart-line"></i> FINANCE HUB</h1>
