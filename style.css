@@ -5,60 +5,64 @@
     --card-bg: #ffffff;
 }
 
-body { font-family: 'Segoe UI', sans-serif; background: var(--bg-color); margin: 0; }
+body { font-family: 'Segoe UI', sans-serif; background: var(--bg-color); margin: 0; overflow-x: hidden; }
 .container { max-width: 1200px; margin: auto; padding: 20px; }
 
+/* Header & Clock */
 .main-header { 
     background: linear-gradient(135deg, var(--primary-color), #283593);
     color: white; text-align: center; padding: 50px 0; 
 }
+.time-display { font-size: 1rem; opacity: 0.8; margin-top: 10px; }
 
-/* Giữ nguyên cấu trúc Spotlight/Tin vắn của Nam */
+/* Spotlight */
 .spotlight-card {
     background: white; border-left: 5px solid var(--accent-color);
-    padding: 20px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    margin: -25px auto 30px; max-width: 800px; animation: slideIn 0.8s ease;
+    padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    margin: -30px auto 40px; max-width: 900px; animation: slideIn 0.8s ease;
 }
 
-/* Hệ thống Tab căn giữa cho Tin tức */
-.tabs-container { text-align: center; margin: 20px 0; }
-.tab-group { display: inline-flex; gap: 8px; margin-bottom: 10px; background: #e0e0e0; padding: 5px; border-radius: 30px; }
-.tab-item { padding: 6px 18px; cursor: pointer; border-radius: 20px; font-weight: 600; font-size: 0.85rem; color: #555; transition: 0.3s; }
-.tab-item.active { background: var(--primary-color); color: white; }
-
-.news-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+/* News Grid */
+.news-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 25px; }
 .news-item { 
-    background: white; padding: 20px; border-radius: 12px; 
-    transition: 0.3s; box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    background: white; padding: 25px; border-radius: 15px; 
+    transition: 0.3s; box-shadow: 0 4px 12px rgba(0,0,0,0.05);
 }
 .news-item:hover { transform: translateY(-8px); box-shadow: 0 12px 25px rgba(0,0,0,0.1); }
 
-/* ĐIỀU CHỈNH ĐỐI XỨNG: Dàn 2 bảng tính hàng ngang */
+/* BỐ CỤC ĐỐI XỨNG CHO CÔNG CỤ */
 .tools-flex-container { 
     display: flex; 
-    justify-content: space-between; 
     gap: 30px; 
-    margin-bottom: 20px;
+    justify-content: space-between; 
+    margin-top: 20px;
 }
 .tool-card { 
-    flex: 1; /* Hai bảng rộng bằng nhau */
-    background: white; padding: 25px; 
-    border-radius: 15px; box-shadow: 0 8px 20px rgba(0,0,0,0.08); 
+    flex: 1; /* Hai ô tự động chia đều không gian */
+    background: white; 
+    padding: 30px; 
+    border-radius: 20px; 
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08); 
 }
 
-/* Dòng kết quả căn giữa dưới 2 bảng tính */
+/* KẾT QUẢ CĂN GIỮA NẰM DƯỚI */
 .result-display {
-    text-align: center;
-    padding: 20px;
+    margin: 40px auto;
+    padding: 25px;
     background: #e8eaf6;
-    border-radius: 12px;
-    margin: 20px auto;
+    border-radius: 15px;
+    text-align: center;
     font-weight: bold;
     color: var(--primary-color);
-    width: 100%;
+    max-width: 600px;
+    border: 1px dashed var(--primary-color);
 }
 
+input { width: 100%; padding: 14px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
+button { background: var(--primary-color); color: white; border: none; padding: 14px 25px; border-radius: 8px; cursor: pointer; font-weight: bold; transition: 0.3s; }
+button:hover { opacity: 0.9; transform: scale(1.02); }
+
 .ad-placement { margin: 50px auto; text-align: center; }
-.footer { background: #222; color: white; text-align: center; padding: 30px; margin-top: 40px; }
+.footer { background: #222; color: white; text-align: center; padding: 40px; margin-top: 40px; }
 
 @keyframes slideIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
